@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-    // Firebase設定（Firebase Consoleで取得したものを貼り付け）
 const firebaseConfig = {
   apiKey: "AIzaSyA8y8fCcxN-Wvvp2udEC65Vh4rk1RCBMb8",
   authDomain: "logo-635ff.firebaseapp.com",
