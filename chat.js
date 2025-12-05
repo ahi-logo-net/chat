@@ -10,24 +10,22 @@ const firebaseConfig = {
   appId: "1:522098711036:web:7522718e90a629395f7a79",
   measurementId: "G-8F1JZHKC51"
 };
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const commentsRef = ref(db, "comments");
 
-    // 初期化
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    const commentsRef = ref(db, "comments");
+// コメント送信
+document.getElementById("submitBtn").addEventListener("click", () => {
+  const text = document.getElementById("commentInput").value.trim();
+  if (text) {
+    push(commentsRef, { text });
+    document.getElementById("commentInput").value = "";
+  }
+});
 
-    // コメント送信
-    document.getElementById("submitBtn").addEventListener("click", () => {
-      const text = document.getElementById("commentInput").value.trim();
-      if (text) {
-        push(commentsRef, { text });
-        document.getElementById("commentInput").value = "";
-      }
-    });
-
-    // コメント表示
-    onChildAdded(commentsRef, snapshot => {
-      const li = document.createElement("li");
-      li.textContent = snapshot.val().text;
-      document.getElementById("commentList").appendChild(li);
-    });
+// コメント表示
+onChildAdded(commentsRef, snapshot => {
+  const li = document.createElement("li");
+  li.textContent = snapshot.val().text;
+  document.getElementById("commentList").appendChild(li);
+});
