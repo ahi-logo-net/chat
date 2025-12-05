@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatTest</title>
+  <meta charset="UTF-8">
+  <title>ChatTest</title>
 </head>
 <body>
   <button id="loginBtn">Googleでログイン</button><br>
@@ -12,26 +11,19 @@
   <ul id="commentList"></ul>
 
   <script type="module">
-      // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
-  import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-  import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyA8y8fCcxN-Wvvp2udEC65Vh4rk1RCBMb8",
-    authDomain: "logo-635ff.firebaseapp.com",
-    projectId: "logo-635ff",
-    storageBucket: "logo-635ff.firebasestorage.app",
-    messagingSenderId: "522098711036",
-    appId: "1:522098711036:web:7522718e90a629395f7a79",
-    measurementId: "G-8F1JZHKC51"
-  };
-  // Initialize Firebase
-  const analytics = getAnalytics(app);
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA8y8fCcxN-Wvvp2udEC65Vh4rk1RCBMb8",
+      authDomain: "logo-635ff.firebaseapp.com",
+      projectId: "logo-635ff",
+      storageBucket: "logo-635ff.appspot.com",  // ←修正
+      messagingSenderId: "522098711036",
+      appId: "1:522098711036:web:7522718e90a629395f7a79",
+      measurementId: "G-8F1JZHKC51"
+    };
 
     // 初期化
     const app = initializeApp(firebaseConfig);
@@ -44,13 +36,16 @@
     document.getElementById("loginBtn").addEventListener("click", () => {
       signInWithPopup(auth, provider).then(result => {
         console.log("ログイン成功:", result.user.displayName);
-      });
+      }).catch(err => console.error(err));
     });
 
     // コメント送信
     document.getElementById("submitBtn").addEventListener("click", () => {
-      const text = document.getElementById("commentInput").value;
-      if (text) push(commentsRef, { text });
+      const text = document.getElementById("commentInput").value.trim();
+      if (text) {
+        push(commentsRef, { text });
+        document.getElementById("commentInput").value = "";
+      }
     });
 
     // コメント表示
@@ -59,24 +54,6 @@
       li.textContent = snapshot.val().text;
       document.getElementById("commentList").appendChild(li);
     });
-    document.getElementById("loginBtn").addEventListener("click", () => {
-      signInWithPopup(auth, provider).then(result => {
-        console.log("ログイン成功:", result.user.displayName);
-      });
-    });
-    document.getElementById("submitBtn").addEventListener("click", () => {
-  const text = document.getElementById("commentInput").value;
-  if (text) push(commentsRef, { text });
-});
-
-onChildAdded(commentsRef, snapshot => {
-  const li = document.createElement("li");
-  li.textContent = snapshot.val().text;
-  document.getElementById("commentList").appendChild(li);
-});
   </script>
-</body>
-</html>
-
 </body>
 </html>
