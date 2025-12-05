@@ -59,6 +59,21 @@
       li.textContent = snapshot.val().text;
       document.getElementById("commentList").appendChild(li);
     });
+    document.getElementById("loginBtn").addEventListener("click", () => {
+      signInWithPopup(auth, provider).then(result => {
+        console.log("ログイン成功:", result.user.displayName);
+      });
+    });
+    document.getElementById("submitBtn").addEventListener("click", () => {
+  const text = document.getElementById("commentInput").value;
+  if (text) push(commentsRef, { text });
+});
+
+onChildAdded(commentsRef, snapshot => {
+  const li = document.createElement("li");
+  li.textContent = snapshot.val().text;
+  document.getElementById("commentList").appendChild(li);
+});
   </script>
 </body>
 </html>
