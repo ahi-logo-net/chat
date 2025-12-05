@@ -2,42 +2,32 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>ChatTest</title>
+  <title>コメント投稿</title>
 </head>
 <body>
-  <button id="loginBtn">Googleでログイン</button><br>
-  <textarea id="commentInput"></textarea><br>
+  <textarea id="commentInput" placeholder="コメントを入力"></textarea><br>
   <button id="submitBtn">送信</button>
   <ul id="commentList"></ul>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
     import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
+    // Firebase設定（Firebase Consoleで取得したものを貼り付け）
     const firebaseConfig = {
-      apiKey: "AIzaSyA8y8fCcxN-Wvvp2udEC65Vh4rk1RCBMb8",
-      authDomain: "logo-635ff.firebaseapp.com",
-      projectId: "logo-635ff",
-      storageBucket: "logo-635ff.appspot.com",  // ←修正
-      messagingSenderId: "522098711036",
-      appId: "1:522098711036:web:7522718e90a629395f7a79",
-      measurementId: "G-8F1JZHKC51"
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
     };
 
     // 初期化
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
     const db = getDatabase(app);
     const commentsRef = ref(db, "comments");
-
-    // Googleログイン
-    document.getElementById("loginBtn").addEventListener("click", () => {
-      signInWithPopup(auth, provider).then(result => {
-        console.log("ログイン成功:", result.user.displayName);
-      }).catch(err => console.error(err));
-    });
 
     // コメント送信
     document.getElementById("submitBtn").addEventListener("click", () => {
