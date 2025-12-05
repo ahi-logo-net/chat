@@ -2,15 +2,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase
 import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
     // Firebase設定（Firebase Consoleで取得したものを貼り付け）
-    const firebaseConfig = {
-      apiKey: "AIzaSyA8y8fCcxN-Wvvp2udEC65Vh4rk1RCBMb8",
-      authDomain: "logo-635ff.firebaseapp.com",
-      projectId: "logo-635ff",
-      storageBucket: "logo-635ff.firebasestorage.app",
-      messagingSenderId: "522098711036",
-      appId: "1:522098711036:web:7522718e90a629395f7a79",
-      measurementId: "G-8F1JZHKC51"
-    };
+const firebaseConfig = {
+  apiKey: "AIzaSyA8y8fCcxN-Wvvp2udEC65Vh4rk1RCBMb8",
+  authDomain: "logo-635ff.firebaseapp.com",
+  projectId: "logo-635ff",
+  storageBucket: "logo-635ff.firebasestorage.app",
+  messagingSenderId: "522098711036",
+  appId: "1:522098711036:web:7522718e90a629395f7a79",
+  measurementId: "G-8F1JZHKC51"
+};
 
     // 初期化
     const app = initializeApp(firebaseConfig);
