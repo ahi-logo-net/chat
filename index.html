@@ -6,6 +6,48 @@
     <title>ChatTest</title>
 </head>
 <body>
-    <textarea placeholder="何か入力してください"></textarea><button></button>
+  <button id="loginBtn">Googleでログイン</button><br>
+  <textarea id="commentInput"></textarea><br>
+  <button id="submitBtn">送信</button>
+  <ul id="commentList"></ul>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+    // Firebase設定（コンソールで取得したものを貼る）
+    const firebaseConfig = { /* ここに設定を貼る */ };
+
+    // 初期化
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+    const db = getDatabase(app);
+    const commentsRef = ref(db, "comments");
+
+    // Googleログイン
+    document.getElementById("loginBtn").addEventListener("click", () => {
+      signInWithPopup(auth, provider).then(result => {
+        console.log("ログイン成功:", result.user.displayName);
+      });
+    });
+
+    // コメント送信
+    document.getElementById("submitBtn").addEventListener("click", () => {
+      const text = document.getElementById("commentInput").value;
+      if (text) push(commentsRef, { text });
+    });
+
+    // コメント表示
+    onChildAdded(commentsRef, snapshot => {
+      const li = document.createElement("li");
+      li.textContent = snapshot.val().text;
+      document.getElementById("commentList").appendChild(li);
+    });
+  </script>
+</body>
+</html>
+
 </body>
 </html>
